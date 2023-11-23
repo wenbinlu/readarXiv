@@ -7,8 +7,8 @@ import os
 
 url = 'https://arxiv.org/list/astro-ph/new'
 today = datetime.today().strftime('%Y-%m-%d')
-if not os.path.exists(fdir + today):
-    os.mkdir(fdir + today)
+if not os.path.exists(datadir + today):
+    os.mkdir(datadir + today)
 len_ident = 16   # length of the identifier (16)
 id_list = []
 with libreq.urlopen(url) as f:
@@ -37,7 +37,7 @@ i = 0
 for r in results:
     id = id_list[i]
     i += 1
-    with open(fdir + today + '/' + id + '.txt', 'w') as f:
+    with open(datadir + today + '/' + id + '.txt', 'w') as f:
         f.write('title: ' + r.title + '\n')
         # f.write('first author\'s name: ' + str(r.authors[0]) + '\n')
         f.write('abstract: ' + r.summary + '\n')
