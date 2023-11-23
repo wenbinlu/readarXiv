@@ -37,7 +37,7 @@ for arxiv_id in id_list:
         )
 
         response_txt = completion.choices[0].message.content
-        print('---The generated text:', response_txt)
+        print('\n---The generated text:\n', response_txt)
 
         # convert txt to audio
         response_audio = client.audio.speech.create(
