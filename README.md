@@ -24,4 +24,4 @@ Todo list:
 
 (2) I would like to create a nicer GUI interface with buttons to click, instead of having to use a keyboard while listening.
 
-(3) The most expensive part of is the text-to-speech conversion using openAI (roughly a few US cents per . I hope to replace this part with free TTS codes such as, https://github.com/mozilla/TTS or https://github.com/coqui-ai/TTS
+(3) The most expensive part of is the text-to-speech conversion using openAI (roughly a few US cents per . I hope to replace this part with free TTS codes such as, https://github.com/mozilla/TTS (not sure if this is free) or https://github.com/nateshmbhat/pyttsx3
