@@ -6,7 +6,9 @@ Prerequisite: openAI (and an API key to make payment), glob, pygame, subprocess
 
 There are four steps:
 
-(1) First, one must change the directory infor in "dir_info.py" to wherever the user wants the data to be saved.
+(1) First, one must change the directory infor in "dir_info.py" to wherever the user wants the data to be saved. You also need an API key from openAI, which should be placed in your .zshrc (or .bashrc) file in the following form:
+
+export OPENAI_API_KEY="..."
 
 (2) Then, run "python pull_abstracts.py", which will pull all the abstracts from the "arXiv/astro-ph/new" website.
 
