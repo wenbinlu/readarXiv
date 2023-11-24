@@ -5,9 +5,8 @@ import numpy as np
 import multiprocessing
 from multiprocessing import Process
 
-# number of CPUs                                                                
+# number of logical cores
 Ncpu = multiprocessing.cpu_count()
-print('number of CPUs used', Ncpu)
 np.random.seed(31171)
 
 client = OpenAI()
@@ -59,6 +58,7 @@ def makemp3_one(arxiv_id):
 
 if __name__ == '__main__':
     print(id_list)
+    print('number of CPUs used', Ncpu)
     # divide the task into Ncpu chunks
     Nid = len(id_list)
     jlist_chunks = np.array_split(range(Nid), Ncpu)
