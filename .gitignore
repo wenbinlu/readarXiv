@@ -1,5 +1,7 @@
 *~
 data/
+test_treading.py
+tts.py
 .DS_Store
 .idea/
 __pycache__/

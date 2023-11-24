@@ -1,7 +1,6 @@
 import subprocess
 from glob import glob
 from dir_info import *
-import os
 
 # this calls "playaudio.py" repetitively for each .mp3 file
 
@@ -13,7 +12,6 @@ id_list = [f.replace(savedir, '').replace(fmt, '') for f in all_files]
 print(id_list)
 save_id_list = []
 
-#os.chdir(codedir)
 for arxiv_id in id_list:
     audio_savename = savedir + arxiv_id + fmt
     print('playing ' + arxiv_id)

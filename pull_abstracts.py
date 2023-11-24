@@ -1,7 +1,6 @@
 import urllib.request as libreq
 import re
 from dir_info import *
-from datetime import datetime
 import arxiv
 import os
 

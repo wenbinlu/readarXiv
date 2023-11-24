@@ -1,6 +1,8 @@
-I have a long home-to-work commute, during which I would like to listen to daily news on the axXiv.
+I have a long home-to-work commute, during which I would like to listen to daily 'news' on the axXiv.
 
 This project creates a large number of .mp3 files according to the newly posted abstracts on "arXiv/astro-ph/new" and then plays them in sequence. The Replacements are ignored. When each .mp3 is played, the user has 30 seconds (adjustable) to make a decision whether to save the arxiv-ID of this abstract or not. In the end, a list of the saved arxiv-IDs will be printed.
+
+If you just want to listen to the .mp3 files (because producing them daily costs about 2 US dollars), you can download the updated files 
 
 Prerequisite: openAI (and an API key to make payment), pygame, glob
 

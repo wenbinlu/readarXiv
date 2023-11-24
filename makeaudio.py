@@ -23,8 +23,6 @@ system_cont = 'You are a professional astrophysicist.'\
     'including the main methods and findings.'\
     + 'Please include the title at the beginning of your response.'
 
-print(id_list)
-
 
 def makemp3(jlist, s):  # s is a random number (not used)
     for j in jlist:
@@ -59,20 +57,22 @@ def makemp3_one(arxiv_id):
     response_audio.stream_to_file(audio_savename)
 
 
-# divide the task into Ncpu chunks
-Nid = len(id_list)
-jlist_chunks = np.array_split(range(Nid), Ncpu)
-procs = [Process(target=makemp3,
-                 args=(jlist_chunks[n], np.random.randint(10)))
-         for n in range(Ncpu)]
-for p in procs:
-    p.start()
-for p in procs:
-    p.join()
+if __name__ == '__main__':
+    print(id_list)
+    # divide the task into Ncpu chunks
+    Nid = len(id_list)
+    jlist_chunks = np.array_split(range(Nid), Ncpu)
+    procs = [Process(target=makemp3,
+                     args=(jlist_chunks[n], np.random.randint(10)))
+             for n in range(Ncpu)]
+    for p in procs:
+        p.start()
+    for p in procs:
+        p.join()
 
 
 # --- convert mp3 to wav (there is no need for this)
-#subprocess.call(['ffmpeg', '-loglevel', 'quiet', '-y',
+# subprocess.call(['ffmpeg', '-loglevel', 'quiet', '-y',
 #                 '-i', audio_savename, '-c:a', 'libvorbis',
 #                 '-q:a', '10',
 #                 audio_savename.replace('.mp3', '.wav')])
