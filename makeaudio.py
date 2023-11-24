@@ -1,57 +1,78 @@
 from openai import OpenAI
-import time
 from glob import glob
 from dir_info import *
-import subprocess
-start_time = time.time()
+import numpy as np
+import multiprocessing
+from multiprocessing import Process
+
+# number of CPUs                                                                
+Ncpu = multiprocessing.cpu_count()
+print('number of CPUs used', Ncpu)
+np.random.seed(31171)
 
 client = OpenAI()
-skip_generate = False
 
 savedir = datadir + today + '/'
-all_files = glob(savedir + '*.txt')
-id_list = [f.replace(savedir, '').replace('.txt', '') for f in all_files]
+all_files = glob(savedir + 'txt/*.txt')
+id_list = [f.replace(savedir + 'txt/', '').replace('.txt', '') for f in all_files]
+
+# the following controls the output from ChatGPT
+system_cont = 'You are a professional astrophysicist.'\
+    'You will be provided with the title and the abstract of a paper.'\
+    'Please provide an expert-level, brief summary,'\
+    'including the main methods and findings.'\
+    + 'Please include the title at the beginning of your response.'
 
 print(id_list)
-for arxiv_id in id_list:
-    abstr_fname = savedir + arxiv_id + '.txt'
+
+
+def makemp3(jlist, s):  # s is a random number (not used)
+    for j in jlist:
+        makemp3_one(id_list[j])
+
+        
+def makemp3_one(arxiv_id):
+    abstr_fname = savedir + 'txt/' + arxiv_id + '.txt'
     audio_savename = savedir + arxiv_id + '.mp3'
-    system_cont = 'You are a professional astrophysicist.'\
-                  'You will be provided with the title and the abstract of a paper.'\
-                  'Please provide an expert-level, brief summary,'\
-                  'including the main methods and findings.'\
-                   + 'Please include the title at the beginning of your response.'
 
     # read the abstract
     with open(abstr_fname, 'r') as f:
         abstr = f.readline()
 
-    if not skip_generate:
-        # create a digest
-        completion = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": system_cont},
-                {"role": "user", "content": abstr}
-            ]
-        )
+    # create a digest
+    completion = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": system_cont},
+            {"role": "user", "content": abstr}
+        ]
+    )
+    response_txt = completion.choices[0].message.content
+    print('\n---The generated text:\n', response_txt)
+    # convert txt to audio
+    response_audio = client.audio.speech.create(
+        model="tts-1",
+        voice="alloy",
+        input=response_txt,
+    )
+    # save the audio to a file
+    response_audio.stream_to_file(audio_savename)
 
-        response_txt = completion.choices[0].message.content
-        print('\n---The generated text:\n', response_txt)
 
-        # convert txt to audio
-        response_audio = client.audio.speech.create(
-            model="tts-1",
-            voice="alloy",
-            input=response_txt,
-        )
+# divide the task into Ncpu chunks
+Nid = len(id_list)
+jlist_chunks = np.array_split(range(Nid), Ncpu)
+procs = [Process(target=makemp3,
+                 args=(jlist_chunks[n], np.random.randint(10)))
+         for n in range(Ncpu)]
+for p in procs:
+    p.start()
+for p in procs:
+    p.join()
 
-        # save the audio to a file
-        response_audio.stream_to_file(audio_savename)
 
-    # --- convert to wav for better reading (there is no need for this)
-    #subprocess.call(['ffmpeg', '-loglevel', 'quiet', '-y',
-    #                 '-i', audio_savename, '-c:a', 'libvorbis',
-    #                 '-q:a', '10',
-    #                 audio_savename.replace('.mp3', '.wav')])
-    
+# --- convert mp3 to wav (there is no need for this)
+#subprocess.call(['ffmpeg', '-loglevel', 'quiet', '-y',
+#                 '-i', audio_savename, '-c:a', 'libvorbis',
+#                 '-q:a', '10',
+#                 audio_savename.replace('.mp3', '.wav')])

@@ -6,9 +6,11 @@ import arxiv
 import os
 
 url = 'https://arxiv.org/list/astro-ph/new'
-today = datetime.today().strftime('%Y-%m-%d')
-if not os.path.exists(datadir + today):
-    os.mkdir(datadir + today)
+savedir = datadir + today + '/txt/'
+
+if not os.path.exists(savedir):
+    os.makedirs(savedir, exist_ok=True)
+
 len_ident = 16   # length of the identifier (16)
 id_list = []
 with libreq.urlopen(url) as f:
@@ -35,9 +37,9 @@ results = client.results(search_by_id)
 
 i = 0
 for r in results:
-    id = id_list[i]
+    arxiv_id = id_list[i]
     i += 1
-    with open(datadir + today + '/' + id + '.txt', 'w') as f:
+    with open(savedir + arxiv_id + '.txt', 'w') as f:
         f.write('title: ' + r.title + '\n')
         # f.write('first author\'s name: ' + str(r.authors[0]) + '\n')
         f.write('abstract: ' + r.summary + '\n')
