@@ -2,7 +2,9 @@ I have a long home-to-work commute, during which I would like to listen to daily
 
 This project creates a large number of .mp3 files according to the newly posted abstracts on "arXiv/astro-ph/new" and then plays them in sequence. The Replacements are ignored. When each .mp3 is played, the user has 30 seconds (adjustable) to make a decision whether to save the arxiv-ID of this abstract or not. In the end, a list of the saved arxiv-IDs will be printed.
 
-If you just want to listen to the .mp3 files (because producing them daily costs about 2 US dollars), you can download the updated files 
+If you ONLY want to listen to the .mp3 files, you can download the files by going to https://wenbinlu.github.io, and at the bottom, click the 'arXivmp3' link. Note that old files in the distant past will be removed to save storage space.
+
+If you want to generate the .mp3 files by yourself, follow the steps below. With the current implementation, it costs about 2 US dollars to process all the newly posted abstracts per day.
 
 Prerequisite: openAI (and an API key to make payment), pygame, glob
 
@@ -19,6 +21,7 @@ export OPENAI_API_KEY="..."
 (4) Finally, run "python run_playaudio.py", which will play the .mp3 files one by one. For each .mp3 file, the user has 30 seconds (an adjustable parameter in 'playaudio.py') to decide whether to save the arxiv-ID for this file. Alternatively, one can download the .mp3 files into a smartphone or something else with an audio player.
 
 Enjoy!
+
 
 Todo list:
 
