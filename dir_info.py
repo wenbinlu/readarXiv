@@ -1,6 +1,6 @@
 from datetime import datetime
 
-codedir = '/Users/wenbinlu/Dropbox/readarXiv/'
+codedir = '/Users/wenbinlu/Dropbox/Desktop/readarXiv/'
 datadir = codedir + 'arXivmp3_data/'
 
 today = datetime.today().strftime('%Y-%m-%d')

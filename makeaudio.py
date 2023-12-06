@@ -5,22 +5,27 @@ import numpy as np
 import multiprocessing
 from multiprocessing import Process
 
-# number of logical cores
-Ncpu = multiprocessing.cpu_count()
-np.random.seed(31171)
-
 client = OpenAI()
 
 savedir = datadir + today + '/'
 all_files = glob(savedir + 'txt/*.txt')
 id_list = [f.replace(savedir + 'txt/', '').replace('.txt', '') for f in all_files]
+Nid = len(id_list)
+
+# number of logical cores
+Ncpu = min(Nid, multiprocessing.cpu_count())
+np.random.seed(31171)
+
+#gptmodel = 'gpt-3.5-turbo'
+gptmodel = 'gpt-4'
 
 # the following controls the output from ChatGPT
 system_cont = 'You are a professional astrophysicist.'\
-    'You will be provided with the title and the abstract of a paper.'\
+    'You will be provided with the title and then the abstract of a research paper.'\
     'Please provide an expert-level, brief summary,'\
     'including the main methods and findings.'\
-    + 'Please include the title at the beginning of your response.'
+    + 'Please restrict your response to less than 150 words.' \
+    ' Please include the title (but not the abstract) at the beginning of your response.'
 
 
 def makemp3(jlist, s):  # s is a random number (not used)
@@ -38,21 +43,21 @@ def makemp3_one(arxiv_id):
 
     # create a digest
     completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model=gptmodel,
         messages=[
             {"role": "system", "content": system_cont},
             {"role": "user", "content": abstr}
         ]
     )
     response_txt = completion.choices[0].message.content
-    print('\n---The generated text:\n', response_txt)
-    # convert txt to audio
+    print('\n---' + arxiv_id + ':\n', response_txt)
+    # --- convert txt to audio
     response_audio = client.audio.speech.create(
         model="tts-1",
-        voice="alloy",
+        voice=np.random.choice(['alloy', 'fable', 'nova', 'shimmer']),
         input=response_txt,
-    )
-    # save the audio to a file
+        )
+    # --- save the audio to a file
     response_audio.stream_to_file(audio_savename)
 
 
@@ -60,7 +65,6 @@ if __name__ == '__main__':
     print(id_list)
     print('number of CPUs used', Ncpu)
     # divide the task into Ncpu chunks
-    Nid = len(id_list)
     jlist_chunks = np.array_split(range(Nid), Ncpu)
     procs = [Process(target=makemp3,
                      args=(jlist_chunks[n], np.random.randint(10)))

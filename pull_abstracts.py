@@ -39,6 +39,6 @@ for r in results:
     arxiv_id = id_list[i]
     i += 1
     with open(savedir + arxiv_id + '.txt', 'w') as f:
-        f.write('title: ' + r.title + '\n')
+        f.write('title: ' + r.title + '\n\n')
         # f.write('first author\'s name: ' + str(r.authors[0]) + '\n')
         f.write('abstract: ' + r.summary + '\n')
