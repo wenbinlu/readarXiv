@@ -20,7 +20,6 @@ if Nid < 1:
 
 # number of logical cores
 Ncpu = min(Nid, multiprocessing.cpu_count())
-np.random.seed(31171)
 
 # gptmodel = 'gpt-3.5-turbo'
 gptmodel = 'gpt-4'
