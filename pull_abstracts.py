@@ -1,9 +1,12 @@
 import urllib.request as libreq
 import re
-from dir_info import *
 import arxiv
 import os
+from datetime import datetime
 
+from dir_info import *
+
+today = datetime.today().strftime('%Y-%m-%d')
 url = 'https://arxiv.org/list/astro-ph/new'
 savedir = datadir + today + '/txt/'
 
@@ -38,7 +41,8 @@ i = 0
 for r in results:
     arxiv_id = id_list[i]
     i += 1
-    with open(savedir + arxiv_id + '.txt', 'w') as f:
-        f.write('title: ' + r.title + '\n\n')
-        # f.write('first author\'s name: ' + str(r.authors[0]) + '\n')
+    with open(savedir + '%03d' % i + '.txt', 'w') as f:
+        f.write('title: ' + r.title + '\n')
+        authors = [str(aut) for aut in r.authors[:2]]
+        f.write('authors: ' + ', '.join(authors[:2]) + '\n')
         f.write('abstract: ' + r.summary + '\n')

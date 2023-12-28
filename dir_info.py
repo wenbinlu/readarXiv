@@ -1,7 +1,2 @@
-from datetime import datetime
-
-codedir = '/Users/wenbinlu/Dropbox/Desktop/readarXiv/'
-datadir = codedir + 'arXivmp3_data/'
-
-today = datetime.today().strftime('%Y-%m-%d')
-# today = '2023-11-23'
+codedir = '/Users/wenbinlu/PycharmProjects/readarXiv/'
+datadir = '/Users/wenbinlu/Dropbox/Desktop/readarXiv/arXivmp3_data/'
