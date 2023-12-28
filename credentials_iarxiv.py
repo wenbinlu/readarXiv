@@ -1,3 +1,3 @@
 # Your credentials
-username = 'wenbinlu@berkeley.edu'
-password = 'Avg@dro602'
+username = '....@....'
+password = '.......'
