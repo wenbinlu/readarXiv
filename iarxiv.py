@@ -92,6 +92,8 @@ for block in paper_blocks:
     while next_span.has_attr('class'):
         next_span = next_span.find_next('span')
     authors = next_span.get_text(strip=True).split(' - ')
+    for iaut in range(len(authors)):
+        authors[iaut] = authors[iaut].replace('(30+ authors)', '')
     # note: authors is a list of strings
 
     # find the abstract
