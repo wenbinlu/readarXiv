@@ -1,8 +1,8 @@
-I have a long commute to work, during which I would like to listen to daily 'news' on the axXiv.
+I have a long commute to work, during which I sometimes would like to listen to daily 'news' on the axXiv.
 
 This project creates a large number of .mp3 files according to abstracts on the arXiv and then plays them in sequence. When each .mp3 is played, the user has 30 seconds (adjustable) to make a decision whether to save the arxiv-ID of this abstract or not. In the end, a list of the saved arxiv-IDs will be printed.
 
-If you ONLY want to listen to the .mp3 files without producing them, you can download the files by going to https://wenbinlu.github.io, and at the bottom, click the 'arXivmp3' link. Note that old files in the distant past will be removed to save storage space.
+If you ONLY want to listen to the .mp3 files without producing them, you can download the files by going to [this link](https://www.dropbox.com/scl/fo/i3ty75f8mzmaqdo780bwb/AJCSavAiFkjmtmOxr1i9pnA?rlkey=vd98ylvn58t7tdksd1scjgxux&st=qiryv96o&dl=0). Note that old files in the distant past will be removed to save storage space.
 
 If you want to generate the .mp3 files by yourself, follow the steps below. With the current implementation, it costs about 2 US dollars to process all the newly posted abstracts per day.
 
